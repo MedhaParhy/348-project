@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Transaction</title>
+</head>
+<body>
+    <h1>Add Transaction</h1>
+    <form method="post">
+        Amount: <input type="number" step="0.01" name="amount" required><br>
+        Type:
+        <select name="type">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select><br>
+        Date: <input type="date" name="date" required><br>
+        Category:
+        <select name="category_id">
+            {% for c in categories %}
+                <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+        </select><br>
+        <input type="submit" value="Add">
+    </form>
+    <a href="{{ url_for('transactions') }}">Back</a>
+</body>
+</html>

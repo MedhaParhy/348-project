@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction Report</title>
+</head>
+<body>
+    <h1>Transaction Report</h1>
+
+    <form method="post">
+        Post: <input type="date" name="start_date"><br>
+        Prior to: <input type="date" name="end_date"><br>
+        Category:
+        <select name="category_id">
+            <option value="all">All</option>
+            {% for c in categories %}
+                <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+        </select><br>
+        Type:
+        <select name="type">
+            <option value="all">All</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select><br>
+        <input type="submit" value="Filter">
+    </form>
+
+    {% if transactions %}
+        <h2>Results</h2>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>ID</th><th>Amount</th><th>Type</th><th>Date</th><th>Category</th>
+            </tr>
+            {% for t in transactions %}
+                <tr>
+                    <td>{{ t.id }}</td>
+                    <td>{{ t.amount }}</td>
+                    <td>{{ t.type }}</td>
+                    <td>{{ t.date }}</td>
+                    <td>{{ t.category.name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+       <h3>Finance Statistics</h3>
+        <p>Total Transactions: {{ stats.count }}</p>
+        <p>Total Income: ${{ stats.total_income }}</p>
+        <p>Total Expense: ${{ stats.total_expense }}</p>
+        <p>Net Balance: ${{ stats.net_balance }}</p>
+    {% endif %}
+
+    <a href="{{ url_for('transactions') }}">Back to Transactions</a>
+</body>
+</html>
