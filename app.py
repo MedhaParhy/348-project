@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
+import os
 
 #initialize app and config database locally into app.db
 app = Flask(__name__)
@@ -145,4 +146,6 @@ if __name__ == "__main__":
                 Category(name="Entertainment")
             ])
             db.session.commit()
+            port = int(os.environ.get("PORT", 5000))
+            app.run(host="0.0.0.0", port=port)
     app.run(debug=True)
